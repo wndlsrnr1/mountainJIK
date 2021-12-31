@@ -137,11 +137,12 @@ a:hover {
 </style>
 </head>
 <body>
+
 	<jsp:include page="../fragment/head_ver2.jsp"></jsp:include>
 	<jsp:include page="../fragment/footer.jsp"></jsp:include>
 	<div class="title">
 		<h1>
-			<a href="forum_list">자유게시판</a>
+			<a href="${forumURI}">자유게시판</a>
 		</h1>
 	</div>
 	<input type="text" class="searchbox">
@@ -156,13 +157,13 @@ a:hover {
 		<c:forEach var="forum" items="${List}">
 			<tr>
 				<td class="td1">${forum.id}</td>
-				<td class="td2"><a href="forum_select?forumId=${forum.id}">${forum.title}</a></td>
+				<td class="td2"><a href="${forumPostURI}?forumId=${forum.id}">${forum.title}</a></td>
 				<td class="td3">${forum.userId}</td>
 				<td class="td4">${forum.writeDate.getYear()}-${forum.writeDate.getMonthValue()}-${forum.writeDate.getDayOfMonth()}</td>
 			</tr>
 		</c:forEach>
 	</table>
-	<a href="forum_write"><input type="button" class="write"
+	<a href="${forumPostWriteURI}"><input type="button" class="write"
 		value="글쓰기"></a>
 
 	<div class="pageInfo_wrap">
@@ -177,7 +178,7 @@ a:hover {
 				<c:forEach var="num" begin="${pageMaker.startPage}"
 					end="${pageMaker.endPage}">
 					<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-						href="forum_list?pageNum=${num}">${num}</a></li>
+						href="${forumURI}?pageNum=${num}">${num}</a></li>
 				</c:forEach>
 				<!-- 다음페이지 버튼 -->
 				<c:if test="${pageMaker.next}">

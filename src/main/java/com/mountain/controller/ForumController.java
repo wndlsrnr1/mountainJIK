@@ -53,7 +53,7 @@ public class ForumController {
             model.addAttribute("result", result);
             model.addAttribute("pageMaker", pageMake);
 
-            return "forum/forum_list";
+            return "forward:";
 
         }else {
 

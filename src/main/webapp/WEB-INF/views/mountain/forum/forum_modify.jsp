@@ -39,9 +39,9 @@
     </style> 
 </head>
 <body>
-	<div class="modify_form_title"> <h1><a class="go_a" href="forum_list">수정하기</a></h1></div>
+	<div class="modify_form_title"> <h1><a class="go_a" href="${forumURI}">수정하기</a></h1></div>
     <!--게시판으로 이동하는 jsp 파일 -->
-    <form class="modify_form" action="forum_modify" method="POST" style="height: 500px;" enctype="multipart/form-data">
+    <form class="modify_form" action="${forumModifyURI}" method="POST" style="height: 500px;" enctype="multipart/form-data">
         <input type="hidden" name="id" value="${forum.id}">
         <input type="hidden" name="name" value="${forum.userId}"> 
         <input type="hidden" name="write_date" value="${forum.writeDate}">

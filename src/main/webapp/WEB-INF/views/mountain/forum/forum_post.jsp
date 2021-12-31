@@ -126,7 +126,7 @@
 	<jsp:include page="../fragment/footer.jsp"></jsp:include>
 	<div class="title">
 		<h1>
-			<a class="go_a" href="forum_list">자유게시판</a>
+			<a class="go_a" href="${forumPostWriteURI}">자유게시판</a>
 		</h1>
 	</div>
 	<table class="table1">
@@ -137,7 +137,7 @@
 			<td class="td2">${forum.id}</td>
 			<td class="td3">${forum.userId}</td>
 			<td class="td4">${forum.writeDate.getYear()}-${forum.writeDate.getMonthValue()}-${forum.writeDate.getDayOfMonth()}</td>
-			<td class="td5"><a href="forum_modify?forumId=${forum.id}&uId=${forum.uId}">수정	| </a> <a href="forum_delete?forumId=${forum.id}">삭제</a></td>
+			<td class="td5"><a href="${forumModifyURI}?forumId=${forum.id}&uId=${forum.uId}">수정	| </a> <a href="${forumDeleteURI}?forumId=${forum.id}">삭제</a></td>
 
 		</tr>
 		<tr class="contents">
@@ -157,12 +157,12 @@
 				<td class="ctd1">${reply.userId}</td>
 				<td class="ctd2">${reply.content}</td>
 				<td class="ctd3">${reply.writeDate.getYear()}-${reply.writeDate.getMonthValue()}-${reply.writeDate.getDayOfMonth()}</td>
-				<td class="ctd4"><a class="update" href="form_reply_value?id=${reply.id}&forumId=${reply.forumId}">수정 |</a> <a href="forum_reply_delete_one?id=${reply.id}&forumId=${reply.forumId}"> 삭제</a></td>
+				<td class="ctd4"><a class="update" href="form_reply_value?id=${reply.id}&forumId=${reply.forumId}">수정 |</a> <a href="${forumReplyDelete}?id=${reply.id}&forumId=${reply.forumId}"> 삭제</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br>
-	<form class="post_form" action="forum_reply" method="get">
+	<form class="post_form" action="${forumReplyURI}" method="get">
 		<input name="forumId" value="${forum.id}" type="hidden"> 
 		<input name="content" type="text" class="commentBox" placeholder="댓글을 입력하세요">
 		<input class="reply_update" name="reply" type="submit" value="댓글쓰기">

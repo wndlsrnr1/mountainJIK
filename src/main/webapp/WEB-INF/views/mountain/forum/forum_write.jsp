@@ -45,7 +45,7 @@
 		<h1>글쓰기</h1>
 	</div>
 	<!--게시판으로 이동하는 jsp 파일 -->
-	<form class="write_form" action="forum_write" method="POST"
+	<form class="write_form" action="${forumPostWriteURI}" method="POST"
 		style="height: 500px;" enctype="multipart/form-data">
 
 		<div class="title_div">

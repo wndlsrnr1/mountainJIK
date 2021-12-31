@@ -66,13 +66,13 @@ public class UserController {
 		
 	}
 	
-	@GetMapping("/user/logout") // 로그아웃 요청을 받으면
+	@PostMapping("/user/logout") // 로그아웃 요청을 받으면
 	public String logout(HttpSession session) {
 		session.invalidate(); // 세션을 종료해 로그아웃!
-		return "/home";
+		return "/user/find_id_password";
 	}
 	
-	@GetMapping("findId") // 아이디 찾기
+	@PostMapping("user/findId") // 아이디 찾기
 	public String findId(String name, String email, Model model) {
 		
 		User user = mountainService.findId(name, email);
@@ -83,7 +83,7 @@ public class UserController {
 			
 			model.addAttribute("result", result);
 			
-			return "/home";
+			return "/user/find_id_password";
 			
 		} else {
 			
@@ -91,13 +91,13 @@ public class UserController {
 			
 			model.addAttribute("result", result);
 			
-			return "/home";
+			return "/user/find_id_password";
 		}
 		
 		
 	}
 	
-	@GetMapping("findPassword") // 비밀번호 찾기
+	@PostMapping("user/findPassword") // 비밀번호 찾기
 	public String findPassword(String name, String userId, String email, Model model) {
 		
 		User user = mountainService.findPassword(name, userId, email);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:include page="../fragment/uri.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,7 +101,7 @@
 <jsp:include page="../fragment/footer.jsp"></jsp:include>
 	<div class="find_IdPassword"><h1>아이디/비밀번호 찾기</h1></div>
     <div class="find_box">
-        <form class="find_form_01" action="findId" method="get">
+        <form class="find_form_01" action="${userFindURI}" method="post">
             <fieldset class="find_id">
                 <legend>아이디 찾기</legend>
                 <span class="find_span">이름</span><input class="find_name_input_01" type="text" name="name"><br>
@@ -112,7 +113,7 @@
 
         </form>
         <hr>
-        <form class="find_form_02" action="findPassword" method="get">
+        <form class="find_form_02" action="${userFindPasswordURI}" method="post">
             <fieldset class="find_password">
                 <legend>비밀번호 찾기</legend>
                 <span class="find_span">이름</span><input class="find_name_input_02" type="text" name="name"><br>
