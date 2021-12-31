@@ -18,6 +18,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import com.mountain.entity.Criteria;
@@ -46,8 +47,10 @@ public class MountainService {
 		String findImageUrl = "https://place.map.kakao.com/" + id;
 		String returnUrl = "";
 		try{
+			ClassPathResource resource = new ClassPathResource("chrome_driver/chromedriver");
+			String path = resource.getFile().getAbsolutePath();
 			//driver 설정(주소 같이 맞추기) src/main/resources/chromedriver
-			System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+			System.setProperty("webdriver.chrome.driver", path);
 			//Chrome 드라이버 인스턴스 설정
 			driver = new ChromeDriver();
 			//스크립트를 사용하기 위한 캐스팅
@@ -90,12 +93,12 @@ public class MountainService {
 	}
 
 	//서울 영역 json으로 가져오기
-	public String getSoeulBoundJson(){
-		File file = new File("/Users/ikik/IK/JIKPROJECT/mountain/teamProject/src/main/webapp/resources/kakaomap_bound/seoul.json");
+	public String getSoeulBoundJson() {
+		ClassPathResource resource = new ClassPathResource("kakaomap_bound/soeul.json");
 		BufferedReader br = null;
 		String soeulData = "";
 		try {
-
+			File file = resource.getFile();
 			StringBuffer sb = new StringBuffer();
 			br = new BufferedReader(new FileReader(file));
 			while ((soeulData = br.readLine())!=null){

@@ -4,7 +4,9 @@
 <%@ page import="com.mountain.entity.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>         
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%--uri 변수 통합 관리 jsp--%>
+<jsp:include page="../fragment/uri.jsp"/>
 <%
     //response.get
     SanDto san = (SanDto) request.getAttribute("san");
@@ -43,19 +45,12 @@
             $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=${san.lat}&lon=${san.lon}&appid=cc6e7d7b3720e50508b00f6221fdf419',
                 function (
                     결과) {
-
                     $(".mountain_temp").append("온도 : " + parseFloat((결과.main.temp - 273.15)).toFixed(1) + "°C");
                     $(".mountain_humidity").append("습도 : " + 결과.main.humidity + "%");
                     var $Icon = (결과.weather[0].icon).substr(0, 2);
                     $(".mountain_icon").append('<i style="font-size: 80px;" class="' + weatherIcon[$Icon] + '"></i>');
                     $(".mountain_speed").append("바람   : " + 결과.wind.speed + "m/s");
                     $(".mountain_clouds").append("구름  : " + (결과.clouds.all) + "%");
-                    // $(".mountain_main").append("날씨 : " + 결과.weather[0].main);
-                    // $(".mountain_description").append("상세날씨설명 : " + 결과.weather[0].description);
-                    // var imgURL = "http://openweathermap.org/img/w/" + 결과.weather[0].icon + ".png";
-                    // $(".mountain_icon").attr("src", imgURL);
-                    // $(".mountain_country").append("나라   : " + 결과.sys.country);
-                    // $(".mountain_name").append("도시이름  : " + 결과.name);
                 })
         });
     </script>
@@ -214,7 +209,7 @@
 </head>
 
 <body>
-<jsp:include page="../fragment/head_ver3.jsp"></jsp:include>
+<jsp:include page="../fragment/head_ver2.jsp"></jsp:include>
 <jsp:include page="../fragment/footer.jsp"></jsp:include>
 <div class="mountain_page_box">
     <div>
@@ -250,7 +245,6 @@
         <jsp:param name="san" value="<%=san%>"/>
         <jsp:param name="user" value="<%=user%>"/>
         <jsp:param name="user" value="<%=difficultyList%>"/>
-
     </jsp:include>
 
     <div id="5" class="mountain_page_map">
@@ -315,11 +309,11 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=550bdf43dad6f30740d7f79d82612985&libraries=services"></script>
 <script>
     //상태값 받을 전역 변수들.
-    var curName = "";
-    var curLat = "";
-    var curLng = "";
+    let curName = "";
+    let curLat = "";
+    let curLng = "";
     //전역변수 currentSearchingState "cafe", "rest", "entrance"
-    var currentSearchingState = "entrance";
+    let currentSearchingState = "entrance";
 
     //.FD6_list>.onload_img_frame : 로딩중 이미지의 외부 프레임 선택자
     let findWayButtonList = document.querySelectorAll(".moveToFindWay")
@@ -336,10 +330,10 @@
             document.querySelector(".embed").focus();
         }
 
-
         defaultSet();
 
         //처음 실행했을때 부를 함수.
+        //여기 ajax콜 말고 실행할때 가져오는 것으로 바꾸기.
         function defaultSet() {
             $.ajax({
                 type: "post",
@@ -584,7 +578,6 @@
                     var h2 = document.createElement("h2")
                     h2.innerHTML = "이 주위에는 " + currentSearchingState + "가 없습니다."
                     coffeeTitle.appendChild(h2)
-
                 }
             }
 
@@ -618,11 +611,10 @@
                     infowindow.open(map, marker);
                     curLat = place.y;
                     curLng = place.x;
-                    curName = place.category_name;
+                    curName = place.place_name;
                     console.log(curName, curLng, curLat)
                 });
             }
-
             //마커초기화 함수.
             function resetMarker() {
                 for (var i = 0; i < markerList.length; i++) {
@@ -743,17 +735,12 @@
                         loadImgDiv.append(loadImg);
                         list.append(loadImgDiv);
 
-
                         list.appendChild(pPlace);
                         list.appendChild(pAddress);
                         list.appendChild(pPhone);
                         listDom.append(list);
-
-
                     }
-
                 }
-
             }
 
             //page 만들기
@@ -794,22 +781,23 @@
                 var placeId = place.id;
                 $.ajax({
                     type: "GET",
-                    url: "getSrc",
+                    url: "src/get",
                     datatype: "html",
                     cache: false,
                     beforeSend: function () {
-
-                        //list.append(onload);
+                        let beforeImg = document.querySelectorAll(".getImg");
+                        console.log("전에 받아온 이미지가 존재하는 지 "+beforeImg);
+                        if(beforeImg.length != 0){
+                            beforeImg.forEach(function (data){
+                                data.remove();
+                            })
+                        }
                     },
                     data: {
                         id: placeId + ""
                     },
-                    success: async function (data) {
+                    success: function (data) {
                         let loadImg = document.querySelectorAll(".FD6_list > li .load_img");
-                        let beforeImg = document.querySelectorAll(".getImg");
-                        beforeImg.forEach(function (data){
-                            data.remove();
-                        })
                         for (let img of loadImg) {
                             img.remove();
                             let placeImgDiv = document.createElement("div")
@@ -836,27 +824,18 @@
                         backgorundImg.style = "width: 260px; height: 260px";
                         placeImgDiv.append(backgorundImg);
                         let div = document.createElement("div")
-
-
-
-
                         return data;
-                        await sleep(1000);
-
                     },
                     error: function (e) {
                         console.log(e)
                     },
                 })
             }
-
-
         }
     }
 
 
 </script>
-<script>
 
 </script>
 </html>

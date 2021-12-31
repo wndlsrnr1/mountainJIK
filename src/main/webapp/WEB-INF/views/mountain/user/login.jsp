@@ -77,7 +77,7 @@
 
 		<span class="login_logo">로그인</span>
 
-		<form name="login_form" class="login_form" action="/login" method="post" modelAttribute="user">
+		<form name="login_form" class="login_form" action="/user/login" method="post" modelAttribute="user">
 
 			<span class="userId_input_login"><input class="login_id" type="text" name="userId" placeholder="아이디를 입력하세요"></span><br>
 

@@ -66,9 +66,9 @@
         <a href="main"><img src="https://ifh.cc/g/DT3VRF.png" class="mountainicon"></a>
         
        <%if(session.getAttribute("userId") == null){%>
-        	<span class="login"><span><a href="login">로그인</a> &nbsp;  | &nbsp; <a href="join">회원가입</a></span></span>
+        	<span class="login"><span><a href="${userLoginURI}">로그인</a> &nbsp;  | &nbsp; <a href="${userJoinURI}">회원가입</a></span></span>
         <% } else{%>
-        	<span class="login"><span><%=session.getAttribute("userName") %>님 &nbsp;  | &nbsp; <a href="logout">로그아웃</a></span></span>
+        	<span class="login"><span><%=session.getAttribute("userName") %>님 &nbsp;  | &nbsp; <a href="${userLogoutURI}">로그아웃</a></span></span>
         <%} %>
         
         <img src="https://ifh.cc/g/IBDqjk.png"  class="dropbtn" onclick="myFunction()">

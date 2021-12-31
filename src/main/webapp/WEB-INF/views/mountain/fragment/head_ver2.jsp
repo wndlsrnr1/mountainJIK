@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,21 +64,21 @@
 </head>
 <body>
 	 <div class="head">
-        <a href="main"><img src="https://ifh.cc/g/DT3VRF.png" class="mountainicon"></a>
+        <a href="${homeURI}"><img src="https://ifh.cc/g/DT3VRF.png" class="mountainicon"></a>
         
         <%if(session.getAttribute("userId") == null){%>
-        	<span class="login"><span><a href="login">로그인</a> &nbsp;  | &nbsp; <a href="join">회원가입</a></span></span>
+        	<span class="login"><span><a href="${userLoginURI}">로그인</a> &nbsp;  | &nbsp; <a href="${userJoinURI}">회원가입</a></span></span>
         <% } else{%>
-        	<span class="login"><span><%=session.getAttribute("userName") %>님 &nbsp;  | &nbsp; <a href="logout">로그아웃</a></span></span>
+        	<span class="login"><span><%=session.getAttribute("userName") %>님 &nbsp;  | &nbsp; <a href="${userLogoutURI}">로그아웃</a></span></span>
         <%} %>
-        
+
         <img src="https://ifh.cc/g/IBDqjk.png"  class="dropbtn" onclick="myFunction()">
         <div class="dropdown-content" id="myDropdown">
-            <a href="mountain_main">산</a>
-            <a href="forum_list">자유게시판</a>
-            <a href="qnaBoard_list">문의하기</a>
+            <a href="${sanURI}">산</a>
+            <a href="${forumURI}">자유게시판</a>
+            <a href="${qnaURI}">문의하기</a>
         </div>
-        <a href="main"><img src="https://ifh.cc/g/bTvwkU.png" class="mountainlogo" ></a>
+        <a href="${homeURI}"><img src="https://ifh.cc/g/bTvwkU.png" class="mountainlogo" ></a>
     </div>
     <script>
         function myFunction() {

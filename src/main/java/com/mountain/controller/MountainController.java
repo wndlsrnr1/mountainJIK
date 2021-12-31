@@ -38,17 +38,17 @@ public class MountainController {
 	@Autowired
 	MountainService mountainService;
 
-	@GetMapping("mainlist") // ajax 테스트
-	@ResponseBody
-	public List<ForumUser> mainPost() {
-
-		List<ForumUser> list =  mountainService.forumList();
-
-		return list;
-	}
+//	@GetMapping("mainlist") // ajax 테스트
+//	@ResponseBody
+//	public List<ForumUser> mainPost() {
+//
+//		List<ForumUser> list =  mountainService.forumList();
+//
+//		return list;
+//	}
 
 	//주인국 추가내용
-	@GetMapping("san/getSrc")
+	@GetMapping("san/src/get")
 	public @ResponseBody String giveSrc(@RequestParam String id, Model model) {
 		return mountainService.getImageSource(id);
 	}
@@ -83,58 +83,31 @@ public class MountainController {
 		return "san/each_mountain";
 	}
 
-	@GetMapping("main") // 메인 페이지로 이동
+	@GetMapping("home") // 메인 페이지로 이동
 	public String main() {
-		return "mountain/main";
+		return "home";
 	}
-
-
-	// 산
 
 	@GetMapping("san")
 	public String mountain_main(Model model) {
 		String soeulBoundJson = mountainService.getSoeulBoundJson();
 		model.addAttribute("soeulBoundJson", soeulBoundJson);
 		return "san/mountains";
-
 	}
 
 
-	//	@GetMapping("mountain_page") // 산 개별 페이지으로 이동
-	//	public String mountain_page(Long id, Model model) { // 산 ID를 파라미터로 받아 페이지 이동
-	//
-	//		SanDto san = mountainService.selectById(id);
-	//
-	//		model.addAttribute("san", san);
-	//
-	//		return "mountain/mountain_page";
-	//	}
-
-	// 게시판
-
-	// qna게시판
-
-
-	// 자유게시판
-
-
-	@PostMapping("difficulty/write") // 난이도 작성
+	@PostMapping("san/mountain/difficulty/write") // 난이도 작성
 	public String levelInsert(DifficultyDto difficultyDto, Model model, Long sanId, Long userId, HttpSession session) {
-
-		String result = mountainService.levelInsert(difficultyDto, sanId, session);
-
-		SanDto san = mountainService.selectById(sanId);
-
-		model.addAttribute("san", san);
-
-		List<DifficultyDto> difficultyList = mountainService.levelList(sanId);
-
-		model.addAttribute("difficultyList", difficultyList);
-
-		model.addAttribute("result", result);
-
-		return "san/each_mountain";
-
+		if(userId == null){
+			return "/san/each_mountain";
+		}else {
+			String result = mountainService.levelInsert(difficultyDto, sanId, session);
+			SanDto san = mountainService.selectById(sanId);
+			model.addAttribute("san", san);
+			List<DifficultyDto> difficultyList = mountainService.levelList(sanId);
+			model.addAttribute("difficultyList", difficultyList);
+			model.addAttribute("result", result);
+			return "/san/each_mountain";
+		}
 	}
-
 }

@@ -6,10 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="../fragment/uri.jsp"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <hr><br>
 <div id="4" class="mountain_page_level">
     <span><b>난이도</b></span><br><br>
-    <form action="/difficulty?id=${san.id}" method="post" name="levelForm" id="levelForm">
+    <form action="mountain/difficulty/write?id=${san.id}" method="post" name="levelForm" id="levelForm">
         <select name="level" style="height: 30px; margin-top: 10px;">
             <option value="🔥☆☆☆☆">🔥☆☆☆☆</option>
             <option value="🔥🔥☆☆☆">🔥🔥☆☆☆</option>

@@ -60,13 +60,13 @@
 </head>
 
 <body>
-<jsp:include page="../fragment/head.jsp"></jsp:include>
+<jsp:include page="../fragment/head_ver2.jsp"></jsp:include>
 <jsp:include page="../fragment/footer.jsp"></jsp:include>
     <div class="join_box">
 
         <span class="join_logo">회원가입</span>
         
-        <form name="join" action="join_result" method="post">
+        <form name="join" action="/user/join" method="post">
         	
             <span class="input_span">ID</span> <span class="userId_input_join"><input class="join_input" type="text" name="userId"></input></span><br>
             <hr>

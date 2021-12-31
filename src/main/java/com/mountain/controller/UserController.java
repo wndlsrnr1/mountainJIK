@@ -31,19 +31,16 @@ public class UserController {
 		return "user/join";
 	}
 
-	@PostMapping("join_result") // 회원가입 결과
+	@PostMapping("user/join") // 회원가입 결과
 	public String join_result(User user, Model model) {
-
 		String result = mountainService.userInsert(user);
-
 		model.addAttribute("result", result);
-
-		return "mountain/main";
+		return "/home";
 	}
 
-	@GetMapping("find") // 아이디, 비밀번호 찾기 페이지로 이동
+	@GetMapping("user/find") // 아이디, 비밀번호 찾기 페이지로 이동
 	public String find() {
-		return "mountain/find_id_password";
+		return "user/find_id_password";
 	}
 
 	@GetMapping("user/login") // 로그인 페이지로 이동
@@ -64,18 +61,15 @@ public class UserController {
 			session.setAttribute("userId", user01.getId()); // user의 id를 session 객체에 담는다.
 			session.setAttribute("userName", user01.getUserId()); // user의 userId를 session 객체에 담는다.
 			session.setMaxInactiveInterval(30*60); // session 30분동안 유지
-			return "home";
+			return "/home";
 		}
 		
 	}
 	
-	@GetMapping("logout") // 로그아웃 요청을 받으면
+	@GetMapping("/user/logout") // 로그아웃 요청을 받으면
 	public String logout(HttpSession session) {
-		
 		session.invalidate(); // 세션을 종료해 로그아웃!
-		
-		return "home";
-		
+		return "/home";
 	}
 	
 	@GetMapping("findId") // 아이디 찾기
@@ -89,7 +83,7 @@ public class UserController {
 			
 			model.addAttribute("result", result);
 			
-			return "home";
+			return "/home";
 			
 		} else {
 			
@@ -97,7 +91,7 @@ public class UserController {
 			
 			model.addAttribute("result", result);
 			
-			return "home";
+			return "/home";
 		}
 		
 		

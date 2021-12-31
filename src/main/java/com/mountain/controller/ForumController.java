@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+//post 글 하나를 의미.
 
 @Controller
 public class ForumController {
@@ -36,9 +37,9 @@ public class ForumController {
         return "forum/forum_list";
     }
 
-    @GetMapping("forum_write") // 자유게시판 글 작성 페이지로 이동
+    @GetMapping("forum/post/write") // 자유게시판 글 작성 페이지로 이동
     public String forum_write(HttpSession session, Model model, Criteria cri) {
-
+        //로그인 하지 않았을 때.
         if(session.getAttribute("userId") == null) {
 
             String result = "로그인 해주세요.";
@@ -52,17 +53,17 @@ public class ForumController {
             model.addAttribute("result", result);
             model.addAttribute("pageMaker", pageMake);
 
-            return "mountain/list";
+            return "forum/forum_list";
 
         }else {
 
-            return "mountain/write";
+            return "forum/forum_write";
 
         }
 
     }
 
-    @GetMapping("forum_select") // 자유게시판 글로 이동
+    @GetMapping("forum/post") // 자유게시판 글로 이동
     public String forum_select(Long forumId, Model model) {
 
         ForumUser forumOne = mountainService.forumSelectById(forumId);
@@ -71,10 +72,10 @@ public class ForumController {
         model.addAttribute("forum", forumOne);
         model.addAttribute("replyList" ,list);
 
-        return "mountain/post";
+        return "forum/forum_post";
     }
 
-    @PostMapping("forum_write") // 자유게시판 글 작성
+    @PostMapping("forum/post/write") // 자유게시판 글 작성
     public String forum_write_post(ForumDto forumDto, Model model, Image image, HttpSession session, Criteria cri) {
 
         // 이미지
@@ -110,11 +111,11 @@ public class ForumController {
         model.addAttribute("result", result);
         model.addAttribute("List", mountainService.forumInfoPaging(cri));
 
-        return "mountain/list";
+        return "forum/forum_list";
 
     }
 
-    @GetMapping("forum_modify") // 자유게시판 글 수정 페이지로 이동
+    @GetMapping("forum/post/modify") // 자유게시판 글 수정 페이지로 이동
     public String forum_modify(@Param("forumId") Long forumId, @Param("uId") Long uId, Model model, HttpSession session) {
 
         Long userId = (Long) session.getAttribute("userId");
@@ -135,17 +136,17 @@ public class ForumController {
             model.addAttribute("forum", forumOne);
             model.addAttribute("replyList" ,list);
 
-            return "mountain/post";
+            return "forum/forum_post";
 
         }else {
 
-            return "mountain/modify";
+            return "forum/forum_modify";
 
         }
 
     }
 
-    @PostMapping("forum_modify") // 자유게시판 글 수정
+    @PostMapping("forum/post/modify") // 자유게시판 글 수정
     public String forum_modifyResult(ForumDto forumDto, Model model, Image image, HttpSession session, Criteria cri) {
 
         // 이미지
@@ -183,11 +184,11 @@ public class ForumController {
         model.addAttribute("result", result);
         model.addAttribute("List", mountainService.forumInfoPaging(cri));
 
-        return "mountain/list";
+        return "forum/forum_list";
 
     }
 
-    @GetMapping("forum_delete") // 자유게시판 글 삭제
+    @GetMapping("forum/post/delete") // 자유게시판 글 삭제
     public String forum_delete(Long forumId, HttpSession session, Model model, Criteria cri) {
 
         // 자유게시판 페이징
@@ -209,7 +210,7 @@ public class ForumController {
             model.addAttribute("result", result);
             model.addAttribute("List", mountainService.forumInfoPaging(cri));
 
-            return "mountain/list";
+            return "forum/forum_list";
 
         } else {
 
@@ -218,15 +219,13 @@ public class ForumController {
             model.addAttribute("result", result);
             model.addAttribute("List", mountainService.forumInfoPaging(cri));
 
-            return "mountain/list";
+            return "forum/forum_list";
         }
     }
 
-    @GetMapping("forum_search") // 자유게시판 검색
+    @GetMapping("forum/post/search") // 자유게시판 검색
     public String forum_search(Model model, Criteria cri, @Param("select") String select, @Param("search") String search) {
-
         // 자유게시판 페이징
-
         int total = mountainService.getTotal();
 
         PageMakerDto pageMake = new PageMakerDto(cri, total);
@@ -235,11 +234,11 @@ public class ForumController {
 
         model.addAttribute("pageMaker", pageMake);
 
-        return "mountain/list";
+        return "forum/forum_list";
 
     }
 
-    @GetMapping("forum_reply") // 자유게시판 댓글 작성
+    @GetMapping("forum/reply") // 자유게시판 댓글 작성
     public String forum_reply_insert(ReplyForumDto replyForumDto, Long forumId, Model model, HttpSession session) {
 
         mountainService.forumReplyInsert(replyForumDto, session);
@@ -251,7 +250,7 @@ public class ForumController {
         model.addAttribute("forum", forumOne);
         model.addAttribute("replyList" ,list);
 
-        return "mountain/post";
+        return "forum/forum_list";
     }
 
     @GetMapping("form_reply_value") // 자유게시판 댓글 하나 가져오기 -> 수정하기 위함
@@ -274,19 +273,19 @@ public class ForumController {
             model.addAttribute("forum", forumOne);
             model.addAttribute("replyList" ,list);
 
-            return "mountain/post";
+            return "forum/forum_post";
 
         } else {
 
             model.addAttribute("reply", reply);
 
-            return "mountain/post_modify";
+            return "forum/forum_post_modify";
 
         }
 
     }
 
-    @GetMapping("forum_relpy_modify") // 자유게시판 댓글 수정
+    @GetMapping("forum/reply/modify") // 자유게시판 댓글 수정
     public String forum_reply_modify(ReplyForumDto replyForumDto, Model model) {
 
         mountainService.forum_reply_update(replyForumDto);
@@ -297,11 +296,10 @@ public class ForumController {
         model.addAttribute("forum", forumOne);
         model.addAttribute("replyList" ,list);
 
-        return "mountain/post";
-
+        return "forum/forum_post";
     }
 
-    @GetMapping("forum_reply_delete_one") // 자유게시판 댓글 하나 삭제하기
+    @GetMapping("forum/reply/delete") // 자유게시판 댓글 하나 삭제하기
     public String forum_reply_delete_one(HttpSession session, Model model, Long id, Long forumId) {
 
         Long userId = (Long) session.getAttribute("userId");
@@ -318,7 +316,7 @@ public class ForumController {
             model.addAttribute("forum", forumOne);
             model.addAttribute("replyList" ,list);
 
-            return "mountain/post";
+            return "forum/forum_post";
 
         }else {
 
@@ -328,7 +326,7 @@ public class ForumController {
             model.addAttribute("forum", forumOne);
             model.addAttribute("replyList" ,list);
 
-            return "mountain/post";
+            return "forum/forum_post";
 
         }
     }

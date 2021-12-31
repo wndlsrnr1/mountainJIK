@@ -2,6 +2,7 @@
 <%@ page import="com.mountain.entity.SanDto" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<jsp:include page="../fragment/uri.jsp"/>
 <%
     String soeulBoundJson = (String)request.getAttribute("soeulBoundJson");
     Object sanList = request.getAttribute("sanList");
@@ -27,6 +28,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="../fragment/uri.jsp"/>
 <jsp:include page="../fragment/head_ver2.jsp"></jsp:include>
 <jsp:include page="../fragment/footer.jsp"></jsp:include>
 <div class="pageTitle"><h1>산 선택하기</h1></div>
@@ -127,7 +129,7 @@
                 //맵 마커에 이벤트 등록.
                 kakao.maps.event.addListener(marker, 'click', function() {
                     //클릭이벤트로 이동
-                    window.location.href="http://localhost:8080/san/mountain?id="+(i+1);
+                    window.location.href="${eachSanURI}"+(i+1);
 
                 });
 

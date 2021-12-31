@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="fragment/uri.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<style>
 		*{margin: 0px; padding: 0px; text-decoration: none; list-style: none;}
-			
-		 .slide{width: 1918px; height: 500px;}
-			        
+	 	.slide{width: 1918px; height: 500px;}
+
 	    .frame{
 	        width: calc(1918px); height: 500px;
 	
@@ -40,9 +40,9 @@
 	<div class="outer">
 		<div class="frame">
 			<ul>
-				<li><a href="san"><img class="slide" src="https://t1.daumcdn.net/cfile/tistory/9951DC475EF188DC0B"></a></li>
-	            <li><a href="forum"><img class="slide" src="https://ifh.cc/g/vHYHsf.jpg"></a></li>
-	            <li><a href="qna"><img class="slide" src="https://ifh.cc/g/zxCITP.jpg"></a></li>
+				<li><a href="/san"><img class="slide" src="https://t1.daumcdn.net/cfile/tistory/9951DC475EF188DC0B"></a></li>
+	            <li><a href="/forum"><img class="slide" src="https://ifh.cc/g/vHYHsf.jpg"></a></li>
+	            <li><a href="/qna"><img class="slide" src="https://ifh.cc/g/zxCITP.jpg"></a></li>
 	         </ul>
 		</div>
 			<img src="https://ifh.cc/g/Ah7PQy.png.png">
@@ -54,7 +54,7 @@
 		<br><br>
 		<b><h3>안전하고 즐거운 등산을 위해</h3></b>
 		</div>
-<jsp:include page="fragment/head.jsp"></jsp:include>
+<jsp:include page="fragment/head_ver2.jsp"></jsp:include>
 <jsp:include page="fragment/footer.jsp"></jsp:include>
 </body>
 	<script type="text/javascript">
